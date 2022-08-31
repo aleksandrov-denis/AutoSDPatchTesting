@@ -1,0 +1,46 @@
+[
+    {
+        "cluster_name": "localhost.localdomain",
+        "date": "2022-08-30T18:21:04.773236Z",
+        "test_type": "boot-time",
+        "sample": 1,
+        "test_config": {
+            "hostname": "localhost.localdomain",
+            "IPaddr": "192.168.0.139",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "5"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 428.41665337997256,
+                "ssh_et": 126.17517280578613,
+                "sysctl_et": 2.14206862449646,
+                "total_et": 128.3172414302826,
+                "boot_tgt": "graphical.target"
+            },
+            "satime": {
+                "kernel": 7.598,
+                "initrd": 10.986,
+                "userspace": 17.085
+            },
+            "sablame": {
+                "initrd-switch-root.service": 4.787,
+                "NetworkManager-wait-online.service": 4.378,
+                "NetworkManager.service": 2.41,
+                "systemd-logind.service": 2.271,
+                "modprobe@drm.service": 2.085
+            },
+            "neptuneui": {}
+        },
+        "system_config": {
+            "kernel": "5.14.0-rt21+",
+            "osrelease": "CentOS Stream 9",
+            "architecture": "aarch64",
+            "model": "Cortex-A72",
+            "numcores": "4",
+            "bogomips": "108.00"
+        }
+    }
+]
