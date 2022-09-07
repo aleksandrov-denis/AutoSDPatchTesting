@@ -77,8 +77,6 @@ class Timer:
         if self._start_time is None:
             raise TimerError(f"Timer is not running. Use .start() to start it")
         elapsed_time = time.perf_counter() - self._start_time
-        
-        
         self._start_time = None
         if self.logger:
             self.logger(self.text.format(elapsed_time))
@@ -525,7 +523,7 @@ def main():
         datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + sys.argv[1] +  ".json")
 
     # List of Dictionaries
-    3results_list = []          # comprehensive results (all SUTs)
+    results_list = []          # comprehensive results (all SUTs)
 
     ##########################
     # OUTER LOOP - For each SUT
