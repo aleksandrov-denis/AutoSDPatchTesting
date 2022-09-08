@@ -7,7 +7,9 @@
 int main(void){
 	FILE *results_file;
 	FILE *file;
+	FILE *csv;
 	char path[MAX_LINE_LENGTH] = "clear_linux_patches_results/";
+	int line_count;
 	//char *line = NULL;
 	//size_t len = 0;
 	//ssize_t read;
@@ -19,12 +21,18 @@ int main(void){
 	}
 
 
+	csv = fopen("graph_data.csv", "w");
+	if(!csv){
+		perror("graph_data.csv");
+		return EXIT_FAILURE;
+	}
+
 	results_file = fopen("results.txt", "r");
 	if(results_file != NULL){
 
 		char results_line[MAX_LINE_LENGTH];
 
-		
+			
 		while(fgets(results_line, sizeof results_line, results_file) != NULL){
 			results_line[strcspn(results_line, "\n")] = 0;
 			strcat(path, results_line);
@@ -37,22 +45,58 @@ int main(void){
 
 			strcpy(path, "clear_linux_patches_results/");
 			char line[MAX_LINE_LENGTH];
-
+			
+			line_count = 0;
 			while(fgets(line, sizeof line, file) != NULL){
 				printf("%s", line);
 				// read individual file and store relevant info in json struct:
-				//	kernel
-				//	initrd
-				//	userspace
-				//	total_boot_time
-				//	initrd_switch_root.service
-				//	NetworkManager-wait-online.service
-				//	NetworkManager.service
-				//	systemd-logind.service
-				//	modprobe@drm.service
-				//	time to first camera frame
+				// 	DATA OF INTEREST			LINE NUMBER
+				//	kernel 					24
+				//	initrd 					25
+				//	userspace 				26
+				//	total_boot_time 			
+				//	initrd_switch_root.service 		29
+				//	NetworkManager-wait-online.service 	30
+				//	NetworkManager.service 			31 
+				//	modprobe@drm.service 			32
+				//	systemd-logind.service 			33
+				//	time to first camera frame 		
+				line_count++;
 				
+				switch(line_count){
+					case 24:
+						// write kernel to csv
+						// store kernel
+						break;
+					case 25:
+						// write initrd to csv
+						// store initrd
+						break;
+					case 26:
+						// write userpace to csv
+						// store userspace
+						// add kernel, initrd, and userspace
+						// store total_boot_time
+						break;
+					case 29:
+						// write to csv
+						break;
+					case 30:
+						// write to csv
+						break;
+					case 31:
+						// write to csv
+                                                break;
+					case 32:
+						// write to csv
+                                                break;
+					case 33:
+						// write to csv
+                                                break;
+				}
+
 			}
+
 			if(fclose(file)){
 				perror(path);
 				return EXIT_FAILURE;
@@ -65,6 +109,11 @@ int main(void){
 	}
 	else{
 		perror("results.txt");
+		return EXIT_FAILURE;
+	}
+
+	if(fclose(csv)){
+		perror("graph_data.csv");
 		return EXIT_FAILURE;
 	}
 
