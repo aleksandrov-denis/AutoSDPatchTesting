@@ -21,7 +21,7 @@ int main(void){
 	}
 
 
-	csv = fopen("graph_data.csv", "w");
+	csv = fopen("graph_data.csv", "a");
 	if(!csv){
 		perror("graph_data.csv");
 		return EXIT_FAILURE;
@@ -29,7 +29,7 @@ int main(void){
 
 	results_file = fopen("results.txt", "r");
 	if(results_file != NULL){
-
+		fprintf(csv, "kernel,initrd,userspace,total_boot_time,initrd_switch_root.service,NetworkManager-wait-online.service,NetworkManager.service,modprobe@drm.service,systemd-logind.service,time_to_first_camera_frame\n"); 
 		char results_line[MAX_LINE_LENGTH];
 
 			
@@ -48,7 +48,7 @@ int main(void){
 			
 			line_count = 0;
 			while(fgets(line, sizeof line, file) != NULL){
-				printf("%s", line);
+				//printf("%s", line);
 				// read individual file and store relevant info in json struct:
 				// 	DATA OF INTEREST			LINE NUMBER
 				//	kernel 					24
@@ -67,32 +67,40 @@ int main(void){
 					case 24:
 						// write kernel to csv
 						// store kernel
+						printf("%s", line);
 						break;
 					case 25:
 						// write initrd to csv
 						// store initrd
+						printf("%s", line);
 						break;
 					case 26:
 						// write userpace to csv
 						// store userspace
 						// add kernel, initrd, and userspace
 						// store total_boot_time
+						printf("%s", line);
 						break;
 					case 29:
 						// write to csv
+						printf("%s", line);
 						break;
 					case 30:
 						// write to csv
+						printf("%s", line);
 						break;
 					case 31:
 						// write to csv
-                                                break;
+                                                printf("%s", line);
+						break;
 					case 32:
 						// write to csv
-                                                break;
+                                                printf("%s", line);
+						break;
 					case 33:
 						// write to csv
-                                                break;
+                                                printf("%s\n", line);
+						break;
 				}
 
 			}
