@@ -4,15 +4,35 @@
 
 #define MAX_LINE_LENGTH 256
 
+// The function takes the current line in some .json file and writes the numerical data
+// to the specified .csv file
+int get_time(char *aline, FILE *file){
+	char data[MAX_LINE_LENGTH];
+	int breakpoint = strlen(aline);
+	int data_index = 0;
+	for(int i = 17; i < strlen(aline); i++){
+		if(aline[i] != '"' && aline[i] != ' ' && aline[i] != ',' && aline[i] != '\n'){
+			if(aline[i] == ':')
+				breakpoint = i;
+			if(i > breakpoint){
+				data[data_index] = aline[i];
+				data_index++;
+			}
+		}
+	}
+	fprintf(file, data);
+	fprintf(file, ",");
+	return 0;
+}
+
+// Reads all of the .json files in the results directory and calls get_time() on
+// the lines of interest (defined below)
 int main(void){
 	FILE *results_file;
 	FILE *file;
 	FILE *csv;
 	char path[MAX_LINE_LENGTH] = "clear_linux_patches_results/";
 	int line_count;
-	//char *line = NULL;
-	//size_t len = 0;
-	//ssize_t read;
 
 	int status = system("ls clear_linux_patches_results > results.txt");
 	if(status != 0){
@@ -21,7 +41,7 @@ int main(void){
 	}
 
 
-	csv = fopen("graph_data.csv", "a");
+	csv = fopen("graph_data.csv", "w");
 	if(!csv){
 		perror("graph_data.csv");
 		return EXIT_FAILURE;
@@ -48,8 +68,12 @@ int main(void){
 			
 			line_count = 0;
 			while(fgets(line, sizeof line, file) != NULL){
-				//printf("%s", line);
-				// read individual file and store relevant info in json struct:
+				// This is a table specifying at which lines each data point is positioned in each .json file
+				// However, this is not fully accurate for some files starting from line 29
+				//
+				// Note: I am working on sut_boottest to make the line numbers consistent for these data points
+				//
+				// 
 				// 	DATA OF INTEREST			LINE NUMBER
 				//	kernel 					24
 				//	initrd 					25
@@ -65,41 +89,29 @@ int main(void){
 				
 				switch(line_count){
 					case 24:
-						// write kernel to csv
-						// store kernel
-						printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 25:
-						// write initrd to csv
-						// store initrd
-						printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 26:
-						// write userpace to csv
-						// store userspace
-						// add kernel, initrd, and userspace
-						// store total_boot_time
-						printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 29:
-						// write to csv
-						printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 30:
-						// write to csv
-						printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 31:
-						// write to csv
-                                                printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 32:
-						// write to csv
-                                                printf("%s", line);
+						get_time(line, csv);
 						break;
 					case 33:
-						// write to csv
-                                                printf("%s\n", line);
+						get_time(line, csv);
+						fprintf(csv, "\n");
 						break;
 				}
 
@@ -111,9 +123,6 @@ int main(void){
 			}
 
 		}
-		// write contents of struct to csv file
-			
-		// dir read loop end
 	}
 	else{
 		perror("results.txt");
