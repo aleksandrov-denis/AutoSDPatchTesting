@@ -9,8 +9,12 @@ export KERNELVERSION=$(make kernelversion)$(cat localversion-rt)
 # confige .config ---- make sure that the config file exists in /boot
 sudo cp /boot/config-* .config
 
-# apply patch
-sudo patch -p1 < ../linux/$patch_file
+
+if [ $patch_file != "NOPATCH" ]
+then
+	# apply patch
+	sudo patch -p1 < ../linux/$patch_file
+fi
 
 # build and install patched kernel
 sudo make olddefconfig
@@ -21,5 +25,11 @@ sudo make install
 cd /boot
 sudo chmod 744 vmlinuz*$KERNELVERSION*
 
-# set default kernel
-sudo grubby --set-default=1
+# SET UP ERROR CHECKING
+ls /lib/modules/*$KERNELVERSION*
+export ret=$?
+if [[ ret -eq 0 ]]
+then
+	# set default kernel
+	sudo grubby --set-default=1
+fi

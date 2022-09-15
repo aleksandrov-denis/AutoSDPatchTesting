@@ -15,8 +15,11 @@ sudo grubby --remove-kernel=1
 # remove latest patch
 cd /home/Camera/PatchTesting/kernel-automotive-9
 
-# Reverses the patch which was applied last
-sudo patch -R -p1 < ../linux/$patch_file
+if [ $patch_file != "NOPATCH" ]
+then
+	# Reverses the patch which was applied last
+	sudo patch -R -p1 < ../linux/$patch_file
+fi
 
 # remove the last patched kernel, for space management
 sudo rm -fr /boot/vmlinuz*$KERNELVERSION* /boot/initramfs*$KERNELVERSION* /boot/System.map*$KERNELVERSION* /lib/modules/*$KERNELVERSION*

@@ -54,10 +54,10 @@ set arg [lindex $argv 1]
 set timeout -1
 spawn ./$file $arg
 match_max 100000
-#expect -exact "guest@209.6.24.23's password: "
-expect -exact "guest@192.168.0.139's password: "
+expect -exact "guest@209.6.24.23's password: "
+#expect -exact "guest@192.168.0.139's password: "
 send -- "password\r"
-#expect -exact "guest@209.6.24.23's password: "
-expect -exact "guest@192.168.0.139's password: "
+expect -exact "guest@209.6.24.23's password: "
+#expect -exact "guest@192.168.0.139's password: "
 send -- "password\r"
 expect eof

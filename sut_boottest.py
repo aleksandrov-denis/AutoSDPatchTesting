@@ -14,8 +14,8 @@
 #
 #      "hostname" , "ipAddr" , "user", "password"
 sut_list = [
-    #("localhost.localdomain", "209.6.24.23", "guest", "password"),
-    ("localhost.localdomain", "192.168.0.139", "guest", "password"),
+    ("localhost.localdomain", "209.6.24.23", "guest", "password"),
+    #("localhost.localdomain", "192.168.0.139", "guest", "password"),
 ]
 
 #####################################
@@ -171,6 +171,7 @@ def parse_sablame(cmd_out, the_dict, blame_cnt):
             ##words = re.split(r'\s', line)
             words = line.split()
             service = words[-1]
+            # HERE WE WANT TO FILTER FOR DESIRED PARAMETERS, IN THE CASE THAT WE WANT SPECIFC ONES AND NOT TOP 5
             minutes = re.search('(\d+)min', line)
             seconds = re.search('(\d+\.\d+)s', line)
             millisec = re.search('(\d+)ms', line)
@@ -518,9 +519,9 @@ retry_int = 2                 # client.connect retry interval (in sec)
 # MAIN
 
 def main():
-    blame_cnt = 5            # number of sablame services to record
+    blame_cnt = 23            # number of sablame services to record
     outfilename = str(
-        datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + sys.argv[1] +  ".json")
+        sys.argv[2] + "_" + datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + sys.argv[1] +  ".json")
 
     # List of Dictionaries
     results_list = []          # comprehensive results (all SUTs)
