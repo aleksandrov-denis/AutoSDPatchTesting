@@ -28,21 +28,20 @@ int get_time(char *aline, char *data, char *name){
 	}
 	data[data_index] = '\0';
 	name[name_index] = '\0';
-	//fprintf(file, name);
-	//fprintf(file, ": ");
-	//fprintf(file, data);
-	//fprintf(file, ",");
 	return 0;
 }
 
 // Reads all of the .json files in the results directory and calls get_time() on
 // the lines of interest (defined below)
-int main(void){
+int main(int argc, char *argv[]){
 	FILE *results_file;
 	FILE *file;
 	FILE *csv;
+	FILE *var;
 	char path[MAX_LINE_LENGTH] = "result_test/";
 	int line_count;
+	double averages[9] = {0,0,0,0,0,0,0,0,0};
+	double all_data[10][9] = {{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
 	int status = system("ls result_test > results.txt");
 	if(status != 0){
@@ -51,22 +50,26 @@ int main(void){
 	}
 
 
-	csv = fopen("graph_data.csv", "w");
+	csv = fopen(argv[1], "a");
 	if(!csv){
-		perror("graph_data.csv");
+		perror(argv[1]);
+		return EXIT_FAILURE;
+	}
+	var = fopen(argv[2], "a");
+	if(!var){
+		perror(argv[2]);
 		return EXIT_FAILURE;
 	}
 
 	results_file = fopen("results.txt", "r");
 	if(results_file != NULL){
-		//fprintf(csv, "kernel,initrd,userspace,total_boot_time,initrd_switch_root.service,NetworkManager-wait-online.service,NetworkManager.service,modprobe@drm.service,systemd-logind.service,time_to_first_camera_frame\n"); 
 		char results_line[MAX_LINE_LENGTH];
 
-			
+		int section = 0;
 		while(fgets(results_line, sizeof results_line, results_file) != NULL){
 
-			char data_values[8][100] = {"kernel\0", "initrd\0", "userspace\0", "initrd_switch_root.service\0", "NetworkManager-wait-online.service\0", "NetworkManager.service\0", "modprobe@drm.service\0", "systemd-logind.service\0"};
-			char data_values_check[8][100] = {"kernel\0", "initrd\0", "userspace\0", "initrd_switch_root.service\0", "NetworkManager-wait-online.service\0", "NetworkManager.service\0", "modprobe@drm.service\0", "systemd-logind.service\0"};
+			char data_values[9][100] = {"kernel\0", "initrd\0", "userspace\0", "total_boot_time\0", "initrd_switch_root.service\0", "NetworkManager-wait-online.service\0", "NetworkManager.service\0", "modprobe@drm.service\0", "systemd-logind.service\0"};
+			char data_values_check[9][100] = {"kernel\0", "initrd\0", "userspace\0", "total_boot_time\0",  "initrd_switch_root.service\0", "NetworkManager-wait-online.service\0", "NetworkManager.service\0", "modprobe@drm.service\0", "systemd-logind.service\0"};
 
 			results_line[strcspn(results_line, "\n")] = 0;
 			strcat(path, results_line);
@@ -81,6 +84,7 @@ int main(void){
 			char line[MAX_LINE_LENGTH];
 			
 			line_count = 0;
+			double total_boot_time = 0;
 			while(fgets(line, sizeof line, file) != NULL){
 				// This is a table specifying at which lines each data point is positioned in each .json file
 				// However, this is not fully accurate for some files starting from line 29
@@ -107,61 +111,74 @@ int main(void){
 						//strcat(data_values[0], ": ");
 						//strcat(data_values[0], data);
 						strcpy(data_values[0], data);
+						total_boot_time += atof(data);
 					}
 					else if(strcmp(name, data_values[1]) == 0){
 						//strcat(data_values[1], ": ");
 						//strcat(data_values[1], data);
 						strcpy(data_values[1], data);
+						total_boot_time += atof(data);
 					}
 					else if(strcmp(name, data_values[2]) == 0){
 						//strcat(data_values[2], ": ");
 						//strcat(data_values[2], data);
+
 						strcpy(data_values[2], data);
-					}
-					else if(strcmp(name, data_values[3]) == 0){
-						//strcat(data_values[3], ": ");
-						//strcat(data_values[3], data);
-						strcpy(data_values[3], data);
+
+						char out[50];
+						total_boot_time += atof(data);
+						snprintf(out, 50, "%.3f", total_boot_time);
+						strcat(out, "\0");
+						strcpy(data_values[3], out);
 					}
 					else if(strcmp(name, data_values[4]) == 0){
-						//strcat(data_values[4], ": ");
-						//strcat(data_values[4], data);
+						//strcat(data_values[3], ": ");
+						//strcat(data_values[3], data);
 						strcpy(data_values[4], data);
 					}
 					else if(strcmp(name, data_values[5]) == 0){
-						//strcat(data_values[5], ": ");
-						//strcat(data_values[5], data);
-						//printf("MISSING VALUE TEST\n");
+						//strcat(data_values[4], ": ");
+						//strcat(data_values[4], data);
 						strcpy(data_values[5], data);
 					}
 					else if(strcmp(name, data_values[6]) == 0){
-						//strcat(data_values[6], ": ");
-						//strcat(data_values[6], data);
+						//strcat(data_values[5], ": ");
+						//strcat(data_values[5], data);
+						//printf("MISSING VALUE TEST\n");
 						strcpy(data_values[6], data);
 					}
 					else if(strcmp(name, data_values[7]) == 0){
+						//strcat(data_values[6], ": ");
+						//strcat(data_values[6], data);
+						strcpy(data_values[7], data);
+					}
+					else if(strcmp(name, data_values[8]) == 0){
 						//strcat(data_values[7], ": ");
 						//strcat(data_values[7], data);
-						strcpy(data_values[7], data);
+						strcpy(data_values[8], data);
 					}
 				}
 			}
 
-			for(int i = 0; i < 8; i++){
+			for(int i = 0; i < 9; i++){
 				if(strcmp(data_values_check[i], data_values[i]) == 0){
 					//printf("Testing blank spaces: %s\n", data_values[i]);
 					strcpy(data_values[i], "0");
 				}
-				//printf("The %d index in real array is %s\n", i, data_values[i]);
-				//printf("The %d index in TEST array is %s\n", i, data_values_check[i]);
-			}
 
-			for(int i = 0; i < 8; i++){
-				fprintf(csv, data_values[i]);
-				//printf("%s\n", data_values[i]);
-				fprintf(csv, ",");
+				//fprintf(csv, data_values[i]);
+				//fprintf(csv, ",");
+
+				// ADD TO A DOUBLE ARRAY WITH CORRESPONDING DATA VALUES
+				averages[i] += atof(data_values[i]);
+				//printf("section: %d\n", section);
+				all_data[section][i] = atof(data_values[i]);
+				//section++;
 			}
-			fprintf(csv, "\n");
+			//printf("section: %d\n", section);
+			section++;
+
+			//fprintf(csv, "\n");
 
 
 			if(fclose(file)){
@@ -170,14 +187,43 @@ int main(void){
 			}
 
 		}
+		// DIVIDE EACH DATA POINT FROM DOUBLE ARRAY BY 10 TO GET AVG
+		// AND WRITE TO CSV
+		for(int i = 0; i < 9; i++){
+			fprintf(csv, "%.3f,", averages[i]/10);
+		}
+		fprintf(csv, "\n");
+
+
+		// GET THE SAMPLE VARIANCE FOR EACH DATA POINT
+		double variance[9] = {0,0,0,0,0,0,0,0,0};
+		for(int i = 0; i < 10; i++){
+			for(int j = 0; j < 9; j++){
+				double temp = all_data[i][j] - averages[j]/10;
+				//pow(temp, 2);
+				//variance[j] += temp;
+				variance[j] += temp * temp;
+			}
+		}
+
+		for(int i = 0; i < 9; i++){
+			variance[i] = variance[i]/(10 - 1);
+			fprintf(var, "%f,", variance[i]);
+		}
+		fprintf(var, "\n");
 	}
 	else{
 		perror("results.txt");
 		return EXIT_FAILURE;
 	}
+	//fprintf(csv, "\n");
 
 	if(fclose(csv)){
-		perror("graph_data.csv");
+		perror(argv[1]);
+		return EXIT_FAILURE;
+	}
+	if(fclose(var)){
+		perror(argv[2]);
 		return EXIT_FAILURE;
 	}
 
