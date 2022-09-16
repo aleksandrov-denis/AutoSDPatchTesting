@@ -17,8 +17,9 @@ patcher_main.sh opens an ssh session to the remote host and feeds it patcher_rm_
 4. Compiled kernel is installed
 5. New kernel is set as default boot kernel
 6. Remote host gets rebooted and boot time is recorded via sut_boottest.py, which is written by John Harrigan at https://github.com/jharriga/BootTime. Test result file is written to pwd.
-7. Last patch to the kernel source is reverted
-8. Most recently installed kernel and all files relating to it, in /boot and /lib/modules, are deleted. Grub entry for most recent kernel is removed and default is set to the initially used kernel
+7. Step 6 is called 10 times
+8. Last patch to the kernel source is reverted
+9. Most recently installed kernel and all files relating to it, in /boot and /lib/modules, are deleted. Grub entry for most recent kernel is removed and default is set to the initially used kernel
 
 Steps 1-8 are repeated for every patch.
 
@@ -34,6 +35,22 @@ In order to run the script safely, make sure to follow the prerequisite steps.
 4. The remote host needs to have a kernel source repo and the path to it needs to be modified in patcher_ssh.sh and patcher_rm_ssh.sh (in this case the kernel source used is https://gitlab.com/CentOS/automotive/src/kernel/kernel-automotive-9)
 5. The remote host needs to have a repo with the appropriate patches, modify the path to it in patcher_ssh.sh and patcher_rm_ssh.sh (in this case the patched used are from https://github.com/clearlinux-pkgs/linux)
 6. Make sure that you have grubby installed on your remote host
+7. The local machine needs to have gnuplot installed
 
 ### To Run
 ./main.sh
+
+## Visualization
+Specific data points' averages and variances are converted to csv format and plotted on a histogram.
+
+### Data of Interest
+Each patch gets time tested by running sut_boottest.py ten times, an average and variance is taken for each datapoint in the sample of ten trials, the average and variance points get recorded in .csv files and graphed on a histogram using gnuplot. The datapoints are generated from 'systemd-analyze' and 'systemd-analyze blame'. The points of interest are listed below.
+1. kernel
+2. initrd
+3. userspace
+4. total_boot_time
+5. initrd_switch_root.service
+6. NetworkManager-wait-online.service
+7. NetworkManager.service
+8. modprobe@drm.service
+9. systemd-logind.service
