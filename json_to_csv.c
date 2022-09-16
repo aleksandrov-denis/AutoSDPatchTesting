@@ -189,6 +189,7 @@ int main(int argc, char *argv[]){
 		}
 		// DIVIDE EACH DATA POINT FROM DOUBLE ARRAY BY 10 TO GET AVG
 		// AND WRITE TO CSV
+		fprintf(csv, "%s,", argv[3]);
 		for(int i = 0; i < 9; i++){
 			fprintf(csv, "%.3f,", averages[i]/10);
 		}
@@ -196,6 +197,7 @@ int main(int argc, char *argv[]){
 
 
 		// GET THE SAMPLE VARIANCE FOR EACH DATA POINT
+		fprintf(var, "%s,", argv[3]);
 		double variance[9] = {0,0,0,0,0,0,0,0,0};
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 9; j++){

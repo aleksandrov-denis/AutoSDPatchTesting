@@ -47,12 +47,13 @@ if {$force_conservative} {
 # Expecting two arguments
 set file [lindex $argv 0]
 set arg [lindex $argv 1]
+set num [lindex $argv 2]
 
 # Assuming intended use, spawns patcher_main.sh with a patch as it's only arg
 #
 # Waits twice for a password prompt since two ssh sessions are invoked in patcher_main.sh
 set timeout -1
-spawn ./$file $arg
+spawn ./$file $arg $num
 match_max 100000
 expect -exact "guest@209.6.24.23's password: "
 #expect -exact "guest@192.168.0.139's password: "

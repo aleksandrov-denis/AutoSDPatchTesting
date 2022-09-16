@@ -26,7 +26,7 @@ done
 
 
 # read all files in buffer_dir, take their averages, write to a single .json in ..
-./j2c.o average.csv variance.csv
+./j2c.o average.csv variance.csv $2
 
 # move record files from buffer_dir to storage dir
 mv location_tester/* storage_results_dir/
