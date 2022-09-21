@@ -13,9 +13,9 @@ host="209.6.24.23"
 
 # apply patch
 ssh $user@$host "bash -s - $1" < patcher_ssh.sh
-
+ 
 i=1
-
+# get ten trials for kenrel boot time per patch
 while [ $i -le 10 ]
 do
 	# reboot and track kernel boot time (make sure ip is configured properly)
@@ -25,7 +25,7 @@ do
 done
 
 
-# read all files in buffer_dir, take their averages, write to a single .json in ..
+# read all files in buffer_dir, take their averages and variances, write to two .csv files
 ./j2c.o average.csv variance.csv $2
 
 # move record files from buffer_dir to storage dir

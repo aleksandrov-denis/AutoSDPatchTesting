@@ -4,8 +4,7 @@
 
 #define MAX_LINE_LENGTH 256
 
-// The function takes the current line in some .json file and writes the numerical data
-// to the specified .csv file
+// The function takes the current line in a .json file and parses the data and name on that line
 int get_time(char *aline, char *data, char *name){
 	//char data[MAX_LINE_LENGTH];
 	//char name[MAX_LINE_LENGTH];
@@ -38,12 +37,12 @@ int main(int argc, char *argv[]){
 	FILE *file;
 	FILE *csv;
 	FILE *var;
-	char path[MAX_LINE_LENGTH] = "result_test/";
+	char path[MAX_LINE_LENGTH] = "location_tester/";
 	int line_count;
 	double averages[9] = {0,0,0,0,0,0,0,0,0};
 	double all_data[10][9] = {{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
-	int status = system("ls result_test > results.txt");
+	int status = system("ls location_tester > results.txt");
 	if(status != 0){
 		printf("Could not execute 'ls', exit code %d\n", status);
 		return status;
@@ -80,7 +79,7 @@ int main(int argc, char *argv[]){
 				return EXIT_FAILURE;
 			}
 
-			strcpy(path, "result_test/");
+			strcpy(path, "location_tester/");
 			char line[MAX_LINE_LENGTH];
 			
 			line_count = 0;
@@ -108,20 +107,14 @@ int main(int argc, char *argv[]){
 					get_time(line, data, name);
 				
 					if(strcmp(name, data_values[0]) == 0){
-						//strcat(data_values[0], ": ");
-						//strcat(data_values[0], data);
 						strcpy(data_values[0], data);
 						total_boot_time += atof(data);
 					}
 					else if(strcmp(name, data_values[1]) == 0){
-						//strcat(data_values[1], ": ");
-						//strcat(data_values[1], data);
 						strcpy(data_values[1], data);
 						total_boot_time += atof(data);
 					}
 					else if(strcmp(name, data_values[2]) == 0){
-						//strcat(data_values[2], ": ");
-						//strcat(data_values[2], data);
 
 						strcpy(data_values[2], data);
 
@@ -132,54 +125,35 @@ int main(int argc, char *argv[]){
 						strcpy(data_values[3], out);
 					}
 					else if(strcmp(name, data_values[4]) == 0){
-						//strcat(data_values[3], ": ");
-						//strcat(data_values[3], data);
 						strcpy(data_values[4], data);
 					}
 					else if(strcmp(name, data_values[5]) == 0){
-						//strcat(data_values[4], ": ");
-						//strcat(data_values[4], data);
 						strcpy(data_values[5], data);
 					}
 					else if(strcmp(name, data_values[6]) == 0){
-						//strcat(data_values[5], ": ");
-						//strcat(data_values[5], data);
-						//printf("MISSING VALUE TEST\n");
 						strcpy(data_values[6], data);
 					}
 					else if(strcmp(name, data_values[7]) == 0){
-						//strcat(data_values[6], ": ");
-						//strcat(data_values[6], data);
 						strcpy(data_values[7], data);
 					}
 					else if(strcmp(name, data_values[8]) == 0){
-						//strcat(data_values[7], ": ");
-						//strcat(data_values[7], data);
 						strcpy(data_values[8], data);
 					}
 				}
 			}
 
 			for(int i = 0; i < 9; i++){
+				// if no data was found, set it to zero
 				if(strcmp(data_values_check[i], data_values[i]) == 0){
-					//printf("Testing blank spaces: %s\n", data_values[i]);
 					strcpy(data_values[i], "0");
 				}
 
-				//fprintf(csv, data_values[i]);
-				//fprintf(csv, ",");
-
-				// ADD TO A DOUBLE ARRAY WITH CORRESPONDING DATA VALUES
+				// add time to the corresponding data index in the array in which the average is calculated
 				averages[i] += atof(data_values[i]);
-				//printf("section: %d\n", section);
+				// record all of the values in 2d array in order to calculate sample variance
 				all_data[section][i] = atof(data_values[i]);
-				//section++;
 			}
-			//printf("section: %d\n", section);
 			section++;
-
-			//fprintf(csv, "\n");
-
 
 			if(fclose(file)){
 				perror(path);
@@ -187,6 +161,7 @@ int main(int argc, char *argv[]){
 			}
 
 		}
+
 		// DIVIDE EACH DATA POINT FROM DOUBLE ARRAY BY 10 TO GET AVG
 		// AND WRITE TO CSV
 		fprintf(csv, "%s,", argv[3]);
@@ -202,8 +177,6 @@ int main(int argc, char *argv[]){
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 9; j++){
 				double temp = all_data[i][j] - averages[j]/10;
-				//pow(temp, 2);
-				//variance[j] += temp;
 				variance[j] += temp * temp;
 			}
 		}
@@ -218,7 +191,6 @@ int main(int argc, char *argv[]){
 		perror("results.txt");
 		return EXIT_FAILURE;
 	}
-	//fprintf(csv, "\n");
 
 	if(fclose(csv)){
 		perror(argv[1]);

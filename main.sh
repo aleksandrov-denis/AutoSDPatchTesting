@@ -9,3 +9,7 @@ while read p; do
 	./expect_pswd.exp 'patcher_main.sh' $p $i
 	i=$(( $i + 1 ))
 done < patches.txt
+
+# plot the graphs for the averages and variances
+gnuplot -c run.gnuplot average.csv avg.png
+gnuplot -c run.gnuplot variance.csv var.png

@@ -6,15 +6,16 @@ export patch_file=$1
 cd /home/Camera/PatchTesting/kernel-automotive-9
 export KERNELVERSION=$(make kernelversion)$(cat localversion-rt)
 
-# confige .config ---- make sure that the config file exists in /boot
+# set up .config --- make sure that the config file exists in /boot
 sudo cp /boot/config-* .config
 
-
-if [ $patch_file != "NOPATCH" ]
-then
-	# apply patch
-	sudo patch -p1 < ../linux/$patch_file
-fi
+# makes sure that there is control kernel boot data
+#if [ $patch_file != "NOPATCH" ]
+#then
+#	# apply patch
+#	sudo patch -p1 < ../linux/$patch_file
+#fi
+sudo patch -p1 < ../linux/$patch_file
 
 # build and install patched kernel
 sudo make olddefconfig
@@ -25,7 +26,7 @@ sudo make install
 cd /boot
 sudo chmod 744 vmlinuz*$KERNELVERSION*
 
-# SET UP ERROR CHECKING
+# change default kernel only if modules where installed
 ls /lib/modules/*$KERNELVERSION*
 export ret=$?
 if [[ ret -eq 0 ]]
