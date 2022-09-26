@@ -1,5 +1,5 @@
 set datafile separator ','
-set terminal png size 534,400
+set terminal png size 1333,1000
 set output ARG2
 set style data histograms
 set style fill solid
