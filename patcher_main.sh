@@ -20,17 +20,13 @@ while [ $i -le 10 ]
 do
 	# reboot and track kernel boot time (make sure ip is configured properly)
 	# output the files to buffer_dir to then take avg
-	./sut_boottest.py $1 $i location_tester/
+	./sut_boottest.py $1 $i temp_location/
 	i=$(( $i + 1 ))
 done
 
 
 # read all files in buffer_dir, take their averages and variances, write to two .csv files
 ./j2c.o average.csv variance.csv $2
-
-# move record files from buffer_dir to storage dir
-mv location_tester/* storage_results_dir/
-
 
 # remove bloat
 ssh $user@$host "bash -s - $1" < patcher_rm_ssh.sh

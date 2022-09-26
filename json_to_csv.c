@@ -37,12 +37,12 @@ int main(int argc, char *argv[]){
 	FILE *file;
 	FILE *csv;
 	FILE *var;
-	char path[MAX_LINE_LENGTH] = "location_tester/";
+	char path[MAX_LINE_LENGTH] = "temp_location/";
 	int line_count;
 	double averages[9] = {0,0,0,0,0,0,0,0,0};
 	double all_data[10][9] = {{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
-	int status = system("ls location_tester > results.txt");
+	int status = system("ls temp_location > results.txt");
 	if(status != 0){
 		printf("Could not execute 'ls', exit code %d\n", status);
 		return status;
@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
 				return EXIT_FAILURE;
 			}
 
-			strcpy(path, "location_tester/");
+			strcpy(path, "temp_location/");
 			char line[MAX_LINE_LENGTH];
 			
 			line_count = 0;
