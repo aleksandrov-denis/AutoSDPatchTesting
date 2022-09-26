@@ -1,0 +1,25 @@
+something went wrong at patch #7, only 4 records survived
+
+patch #10 failed at LD .tmp_vmlinux.kallsyms2
+and had a warning in arch/arm64/mm/init.c memblock_free(crash_base, crash_size)
+the avg and var data will be from plain kernel
+
+stopped proccess at the end of modules_install of patch 0120 because it was stuck and i didn't
+want it to lock me out of the pi again since /lib/modules/KERNELVERSION already existed
+
+
+
+TO_REDO:
+patch 0120 --> todo
+	make modules_install --> done
+	make install --> done
+	switch default --> done
+	10 reboots --> done
+	j2c --> done
+test make modules_install when lib/modules/KERNELVERISON already exists
+patch 0110 --> cannot
+	function to patch does not exist in kernel source
+patch 0113 --> cannot
+	patch causes warning which then causes make to crash at LD .tmp_vmlinux.kallsyms2
+	
+continue script from patch 0121 --> todo

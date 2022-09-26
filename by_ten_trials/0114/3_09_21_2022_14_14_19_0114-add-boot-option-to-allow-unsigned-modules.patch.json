@@ -1,0 +1,64 @@
+[
+    {
+        "cluster_name": "localhost.localdomain",
+        "date": "2022-09-21T14:14:20.721292Z",
+        "test_type": "boot-time",
+        "sample": 1,
+        "test_config": {
+            "hostname": "localhost.localdomain",
+            "IPaddr": "209.6.24.23",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "23"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 455.2701985859894,
+                "ssh_et": 3.159916639328003,
+                "sysctl_et": 2.045692205429077,
+                "total_et": 5.20560884475708,
+                "boot_tgt": "graphical.target"
+            },
+            "satime": {
+                "kernel": 7.538,
+                "initrd": 12.972,
+                "userspace": 16.89
+            },
+            "sablame": {
+                "initrd-switch-root.service": 4.705,
+                "NetworkManager-wait-online.service": 4.175,
+                "dracut-initqueue.service": 2.986,
+                "NetworkManager.service": 2.309,
+                "systemd-logind.service": 2.131,
+                "modprobe@drm.service": 1.986,
+                "auditd.service": 1.944,
+                "dbus-broker.service": 1.595,
+                "chronyd.service": 1.572,
+                "boot-efi.mount": 1.521,
+                "systemd-tmpfiles-setup.service": 1.286,
+                "systemd-fsck@dev-disk-by\\x2duuid-156f0420\\x2d627b\\x2d4151\\x2dae6f\\x2dfda…": 1.002,
+                "systemd-udevd.service": 0.995,
+                "systemd-tmpfiles-setup-dev.service": 0.802,
+                "initrd-parse-etc.service": 0.644,
+                "user@999.service": 0.611,
+                "dracut-cmdline.service": 0.609,
+                "sshd.service": 0.555,
+                "systemd-udev-trigger.service": 0.379,
+                "systemd-sysctl.service": 0.329,
+                "dracut-pre-udev.service": 0.325,
+                "systemd-random-seed.service": 0.323,
+                "systemd-journald.service": 0.187
+            },
+            "neptuneui": {}
+        },
+        "system_config": {
+            "kernel": "5.14.0-rt21",
+            "osrelease": "CentOS Stream 9",
+            "architecture": "aarch64",
+            "model": "Cortex-A72",
+            "numcores": "4",
+            "bogomips": "108.00"
+        }
+    }
+]
