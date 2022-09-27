@@ -15,5 +15,5 @@ while read p; do
 done < patches.txt
 
 # plot the graphs for the averages and variances
-gnuplot -c run.gnuplot average.csv avg.png
-gnuplot -c run.gnuplot variance.csv var.png
+gnuplot -c run.gnuplot average.csv avg.png "Average Time Per Patch With n=10" "Patches" "Time"
+gnuplot -c run.gnuplot variance.csv var.png "Variance Per Patch With n=10" "Patches" "Variance"
