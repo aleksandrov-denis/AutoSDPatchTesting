@@ -60,3 +60,9 @@ Each patch gets time tested by running sut_boottest.py ten times, an average and
 7. NetworkManager.service
 8. modprobe@drm.service
 9. systemd-logind.service
+
+### Graphs
+You can find the histrograms for the averages in mavg.png and the variances in mvar.png
+
+To view them in the CLI, run:
+$ gthumb <yourfile.png>
