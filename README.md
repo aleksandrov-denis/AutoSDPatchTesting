@@ -13,7 +13,7 @@ Each patch is applied on the pi remotely via ssh. The local x86_64 machine, in m
 		- sut_boottest.py reboots remote host and gathers boot data via systemd-analyze into .json files
 	- patcher_main.sh calls j2c.o to append averages and variances to average.csv and variance.csv
 	- patcher_main.sh opens an ssh session to the remote host and feeds it patcher_rm_ssh.sh
-		- patcher_rm_ssh.sh reverts previous patch from kernel source and reletes installed kernel + modules
+		- patcher_rm_ssh.sh reverts previous patch from kernel source and deletes installed kernel + modules
 - main.sh calls run.gnuplot to make two histograms based off of average.csv and variance.csv
 
 
