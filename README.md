@@ -64,5 +64,5 @@ Each patch gets time tested by running sut_boottest.py ten times, an average and
 ### Graphs
 You can find the histrograms for the averages in mavg.png and the variances in mvar.png
 
-To view them in the CLI, run:
+# To view them in the CLI, run:
 $ gthumb <yourfile.png>
