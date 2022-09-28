@@ -12,21 +12,21 @@ host="209.6.24.23"
 # https://www.howtogeek.com/devops/how-to-run-a-local-shell-script-on-a-remote-ssh-server/
 
 # apply patch
-ssh $user@$host "bash -s - $1" < patcher_ssh.sh
+ssh $user@$host "bash -s - $patch" < patcher_ssh.sh
  
-i=1
+trial=1
 # get ten trials for kenrel boot time per patch
-while [ $i -le 10 ]
+while [ $trial -le 10 ]
 do
 	# reboot and track kernel boot time (make sure ip is configured properly)
 	# output the files to buffer_dir to then take avg
-	./sut_boottest.py $1 $i temp_location/
-	i=$(( $i + 1 ))
+	./sut_boottest.py $patch $trial temp_location/
+	trial=$(( $trial + 1 ))
 done
 
 
 # read all files in buffer_dir, take their averages and variances, write to two .csv files
-./j2c.o average.csv variance.csv $2
+./j2c.o average.csv variance.csv $patch_num
 
 # remove bloat
-ssh $user@$host "bash -s - $1" < patcher_rm_ssh.sh
+ssh $user@$host "bash -s - $patch" < patcher_rm_ssh.sh

@@ -35,7 +35,7 @@ int get_time(char *aline, char *data, char *name){
 int main(int argc, char *argv[]){
 	FILE *results_file;
 	FILE *file;
-	FILE *csv;
+	FILE *avg;
 	FILE *var;
 	char path[MAX_LINE_LENGTH] = "temp_location/";
 	int line_count;
@@ -49,8 +49,8 @@ int main(int argc, char *argv[]){
 	}
 
 
-	csv = fopen(argv[1], "a");
-	if(!csv){
+	avg = fopen(argv[1], "a");
+	if(!avg){
 		perror(argv[1]);
 		return EXIT_FAILURE;
 	}
@@ -164,11 +164,11 @@ int main(int argc, char *argv[]){
 
 		// DIVIDE EACH DATA POINT FROM DOUBLE ARRAY BY 10 TO GET AVG
 		// AND WRITE TO CSV
-		fprintf(csv, "%s,", argv[3]);
+		fprintf(avg, "%s,", argv[3]);
 		for(int i = 0; i < 9; i++){
-			fprintf(csv, "%.3f,", averages[i]/10);
+			fprintf(avg, "%.3f,", averages[i]/10);
 		}
-		fprintf(csv, "\n");
+		fprintf(avg, "\n");
 
 
 		// GET THE SAMPLE VARIANCE FOR EACH DATA POINT
@@ -192,7 +192,7 @@ int main(int argc, char *argv[]){
 		return EXIT_FAILURE;
 	}
 
-	if(fclose(csv)){
+	if(fclose(avg)){
 		perror(argv[1]);
 		return EXIT_FAILURE;
 	}

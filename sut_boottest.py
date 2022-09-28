@@ -520,8 +520,12 @@ retry_int = 2                 # client.connect retry interval (in sec)
 
 def main():
     blame_cnt = 23            # number of sablame services to record
+    patch = sys.argv[1]
+    reboot_trial = sys.argv[2]
+    destination_dir = sys.argv[3]
+
     outfilename = str(
-        sys.argv[3] + sys.argv[2] + "_" + datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + sys.argv[1] +  ".json")
+        destination_dir + reboot_trial + "_" + datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + patch + ".json")
 
     # List of Dictionaries
     results_list = []          # comprehensive results (all SUTs)
