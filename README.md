@@ -39,7 +39,7 @@ In order to run the script safely, make sure to follow the prerequisite steps.
 2. The user, host, and password need to be configured properly in expect_pswd.exp, patcher_main.sh, and sut_boottest.py
 3. The remote host should only have one kernel installed in /boot and the grub menu (see NOTE above, under the Process tab)
 4. The remote host needs to have a kernel source repo and the path to it needs to be modified in patcher_ssh.sh and patcher_rm_ssh.sh (in this case the kernel source used is https://gitlab.com/CentOS/automotive/src/kernel/kernel-automotive-9)
-5. The remote host needs to have a repo with the appropriate patches, modify the path to it in patcher_ssh.sh and patcher_rm_ssh.sh (in this case the patched used are from https://github.com/clearlinux-pkgs/linux)
+5. The remote host needs to have a repo with the appropriate patches, modify the path to it in patcher_ssh.sh and patcher_rm_ssh.sh (in this case the patches used are from https://github.com/clearlinux-pkgs/linux)
 6. Make sure that you have grubby installed on your remote host
 7. The local machine needs to have gnuplot installed
 
