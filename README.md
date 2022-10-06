@@ -62,7 +62,7 @@ Each patch gets time tested by running sut_boottest.py ten times, an average and
 9. systemd-logind.service
 
 ### Graphs
-You can find the histrograms for the averages in mavg.png and the variances in mvar.png
+You can find the histrograms for the averages in avg.png and the variances in var.png
 
 #### To view them in the CLI, run:
 $ gthumb <yourfile.png>
