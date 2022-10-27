@@ -56,6 +56,11 @@ while read patch; do
 	if [ $? -ne 0 ]
 	then
 		echo "Something went wrong in patcher_main, exit with code 1"
+		
+		cd setup_env/
+		. unset.sh
+		cd ..
+
 		exit 1
 	fi
 
@@ -69,3 +74,7 @@ done < $patches_txt
 # plot the graphs for the averages and variances
 gnuplot -c run.gnuplot $avg_csv $avg_png "Average Time Per Patch With n=10" "Patches" "Time"
 gnuplot -c run.gnuplot $var_csv $var_png "Variance Per Patch With n=10" "Patches" "Variance"
+
+cd setup_env/
+. unset.sh
+cd ..

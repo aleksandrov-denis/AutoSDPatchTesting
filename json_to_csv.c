@@ -4,6 +4,8 @@
 
 #define MAX_LINE_LENGTH 256
 
+// GET SOME USE OUT OF getenv() CHECK THIS OUT http://www0.cs.ucl.ac.uk/staff/ucacbbl/getenv/
+
 // The function takes the current line in a .json file and parses the data and name on that line
 int get_time(char *aline, char *data, char *name){
 	//char data[MAX_LINE_LENGTH];
