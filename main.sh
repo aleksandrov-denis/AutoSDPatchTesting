@@ -48,8 +48,9 @@ read blam
 patch_num=1
 while read patch; do
 
+	dirname=$(echo "${patch}" | awk '{print substr ($0, 0, 4)}')
 	export patch=$patch
-	export patch_num=$patch_num
+	export patch_num=$dirname
 
 	./patcher_main.sh
 
@@ -66,7 +67,6 @@ while read patch; do
 
 	patch_num=$(( $patch_num + 1 ))
 
-	dirname=$(echo "${patch}" | awk '{print substr ($0, 0, 4)}')
 	mkdir $final_loc/$dirname
 	mv $temp_loc/* $final_loc/$dirname
 done < $patches_txt

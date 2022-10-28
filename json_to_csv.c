@@ -39,12 +39,14 @@ int main(int argc, char *argv[]){
 	FILE *file;
 	FILE *avg;
 	FILE *var;
-	char path[MAX_LINE_LENGTH] = "temp_location/";
+	//char path[MAX_LINE_LENGTH] = "temp_location/";
+	char path[MAX_LINE_LENGTH] = "";
+	strcpy(path, getenv("temp_loc"));
 	int line_count;
 	double averages[9] = {0,0,0,0,0,0,0,0,0};
 	double all_data[10][9] = {{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0}};
 
-	int status = system("ls temp_location > results.txt");
+	int status = system("ls $temp_loc > results.txt");
 	if(status != 0){
 		printf("Could not execute 'ls', exit code %d\n", status);
 		return status;
@@ -81,7 +83,8 @@ int main(int argc, char *argv[]){
 				return EXIT_FAILURE;
 			}
 
-			strcpy(path, "temp_location/");
+			strcpy(path, getenv("temp_loc"));
+			//path = getenv("temp_loc");
 			char line[MAX_LINE_LENGTH];
 			
 			line_count = 0;
