@@ -36,7 +36,7 @@ done
 
 
 # read all files in buffer_dir, take their averages and variances, write to two .csv files
-./j2c.o $avg_csv $var_csv $patch_num
+./j2c.o $patch_num
 
 if [ $? -ne 0 ]
 then

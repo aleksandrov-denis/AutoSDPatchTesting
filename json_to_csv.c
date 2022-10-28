@@ -53,14 +53,14 @@ int main(int argc, char *argv[]){
 	}
 
 
-	avg = fopen(argv[1], "a");
+	avg = fopen(getenv("avg_csv"), "a");
 	if(!avg){
-		perror(argv[1]);
+		perror(getenv("avg_csv"));
 		return EXIT_FAILURE;
 	}
-	var = fopen(argv[2], "a");
+	var = fopen(getenv("var_csv"), "a");
 	if(!var){
-		perror(argv[2]);
+		perror(getenv("var_csv"));
 		return EXIT_FAILURE;
 	}
 
@@ -169,7 +169,7 @@ int main(int argc, char *argv[]){
 
 		// DIVIDE EACH DATA POINT FROM DOUBLE ARRAY BY 10 TO GET AVG
 		// AND WRITE TO CSV
-		fprintf(avg, "%s,", argv[3]);
+		fprintf(avg, "%s,", argv[1]);
 		for(int i = 0; i < 9; i++){
 			fprintf(avg, "%.3f,", averages[i]/10);
 		}
@@ -177,7 +177,7 @@ int main(int argc, char *argv[]){
 
 
 		// GET THE SAMPLE VARIANCE FOR EACH DATA POINT
-		fprintf(var, "%s,", argv[3]);
+		fprintf(var, "%s,", argv[1]);
 		double variance[9] = {0,0,0,0,0,0,0,0,0};
 		for(int i = 0; i < 10; i++){
 			for(int j = 0; j < 9; j++){
@@ -198,11 +198,11 @@ int main(int argc, char *argv[]){
 	}
 
 	if(fclose(avg)){
-		perror(argv[1]);
+		perror(getenv("avg_csv"));
 		return EXIT_FAILURE;
 	}
 	if(fclose(var)){
-		perror(argv[2]);
+		perror(getenv("var_csv"));
 		return EXIT_FAILURE;
 	}
 
