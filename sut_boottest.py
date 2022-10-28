@@ -193,24 +193,24 @@ def parse_sablame(cmd_out, the_dict, blame_cnt):
 
     return the_dict
 
-def parse_neptuneui(cmd_out, the_dict, km_list):
-    # Parse neptune-ui timing stats and populate dict
-    for line in cmd_out.split("\n"):
-        for x, (km_label, search_str) in enumerate (km_list):
-            if search_str in line:
-                # key metric found, extract key/value
-                rstrip1 = line.rstrip('#')
-                rstrip2 = rstrip1.rstrip()
-                splitted = rstrip2.split(':')
-                result = splitted[3].lstrip()
+#def parse_neptuneui(cmd_out, the_dict, km_list):
+#    # Parse neptune-ui timing stats and populate dict
+#    for line in cmd_out.split("\n"):
+#        for x, (km_label, search_str) in enumerate (km_list):
+#            if search_str in line:
+#                # key metric found, extract key/value
+#                rstrip1 = line.rstrip('#')
+#                rstrip2 = rstrip1.rstrip()
+#                splitted = rstrip2.split(':')
+#                result = splitted[3].lstrip()
 ##                keymsg = re.search(key_metric, result)
-                raw_value = result.split(' ')
-                # cleanup raw_value: 3'975.381  --> 3.975381
-                tmp1 = raw_value[0].replace(".", "")
-                tmp2 = tmp1.replace("'", ".") 
-                the_dict[km_label] = float(tmp2) 
-
-    return the_dict
+#                raw_value = result.split(' ')
+#                # cleanup raw_value: 3'975.381  --> 3.975381
+#                tmp1 = raw_value[0].replace(".", "")
+#                tmp2 = tmp1.replace("'", ".") 
+#                the_dict[km_label] = float(tmp2) 
+#
+#    return the_dict
 
 def verify_trim(value):  # Extend to handle str(), float(), int()
     # Verify value. Return value or None if invalid
@@ -472,41 +472,41 @@ def phase4(ip, usr, passwd, num_blames):
 
     return ph4_dict
 
-def phase5(ip, usr, passwd):
+#def phase5(ip, usr, passwd):
     # VARS
-    ph5_dict = {}          # neptune-ui startup timings
+    #ph5_dict = {}          # neptune-ui startup timings
     # List of key metric search strings and dict keys
     #                 KEY        SEARCH STRING
-    km_list = [("logging", "after logging setup"),
-               ("D-Bus",   "after starting session D-Bus"),
-               ("first-frame", "after first frame drawn")
-    ]
+    #km_list = [("logging", "after logging setup"),
+    #           ("D-Bus",   "after starting session D-Bus"),
+    #           ("first-frame", "after first frame drawn")
+    #]
 
     # Initiate SSH connection - ssh_timeout (GLOBAL)
-    client = openclient(ip, usr, passwd, ssh_timeout)
+    #client = openclient(ip, usr, passwd, ssh_timeout)
 
-    cmd = "journalctl | grep -m1 -A20 'STARTUP TIMING REPORT: System UI'"
+    #cmd = "journalctl | grep -m1 -A20 'STARTUP TIMING REPORT: System UI'"
 
     # redirect stderr to stdout
-    cmd_str = cmd + " 2> \&1"
-    stdin, stdout, stderr = client.exec_command(cmd_str, get_pty=True)
+    #cmd_str = cmd + " 2> \&1"
+    #stdin, stdout, stderr = client.exec_command(cmd_str, get_pty=True)
     # Block on completion of exec_command
-    exit_status = stdout.channel.recv_exit_status()
+    #exit_status = stdout.channel.recv_exit_status()
 
     # Check if CMD suceeded, perhaps neptune-ui isn't running
-    if exit_status != 0:
-        print("neptune_stats:"\
-              " neptune-ui startup timing stats unavailable on SUT,"\
-              " skipping")
-        return ph5_dict           # return empty dict{}
+    #if exit_status != 0:
+    #    print("neptune_stats:"\
+    #          " neptune-ui startup timing stats unavailable on SUT,"\
+    #          " skipping")
+    #    return ph5_dict           # return empty dict{}
 
     # single string contains entire cmd result
-    cmd_result = stdout.read().decode('utf8').rstrip('\n')
+    #cmd_result = stdout.read().decode('utf8').rstrip('\n')
 
     # Parse neptune stats from cmd_out and populate dict
-    ph5_dict = parse_neptuneui(cmd_result, ph5_dict, km_list) 
+#    ph5_dict = parse_neptuneui(cmd_result, ph5_dict, km_list) 
 
-    return ph5_dict
+#   return ph5_dict
 
 #####################################
 # GLOBAL VARS
@@ -569,7 +569,6 @@ def main():
         # Phase 2: configure SUT for reboot
         # returns if neptuneui (boolean) is running
         print(f'*Phase 2 - configure SUT for reboot')
-        neptuneui = phase2(sut_ip, sut_usr, sut_pswd, target)
 
         #----------
         # Phase 3: initiate reboot, wait for system readiness
@@ -588,8 +587,8 @@ def main():
 
         #----------
         # Phase 5: neptune UI startup timings
-        print(f'*Phase 5 - neptune timing stats (if available)')
-        neptuneui_dict = phase5(sut_ip, sut_usr, sut_pswd)
+        #print(f'*Phase 5 - neptune timing stats (if available)')
+        #neptuneui_dict = phase5(sut_ip, sut_usr, sut_pswd)
 
         ######################
         # All PHASEs for this SUT completed
@@ -597,7 +596,7 @@ def main():
         data_dict["reboot"] = reboot_dict
         data_dict["satime"] = sa_dict["sa_time"]
         data_dict["sablame"] = sa_dict["sa_blame"]
-        data_dict["neptuneui"] = neptuneui_dict
+        #data_dict["neptuneui"] = neptuneui_dict
 
         # Insert complete data_dict{} into testrun_dict (final dictionary)
         testrun_dict["test_results"] = data_dict
