@@ -34,8 +34,7 @@ then
 	exit 1
 fi
 
-# set default kernel
-sudo grubby --set-default=1
-# MAKE SURE THIS IS NOT HARDCODED
+# set new kernel as default
+sudo grubby --make-default
 
 exit 0

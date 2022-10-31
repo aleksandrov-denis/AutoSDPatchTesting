@@ -13,8 +13,10 @@
 #      >> EDIT THIS LIST FOR YOUR ENVIRONMENT <<
 #
 #      "hostname" , "ipAddr" , "user", "password"
+import os
+
 sut_list = [
-    ("localhost.localdomain", "209.6.24.23", "guest", "password"),
+    ("localhost.localdomain", os.getenv('host'), os.getenv('user'), os.getenv('pswd')),
     #("localhost.localdomain", "192.168.0.139", "guest", "password"),
 ]
 
@@ -522,7 +524,7 @@ def main():
     blame_cnt = 23            # number of sablame services to record
     patch = sys.argv[1]
     reboot_trial = sys.argv[2]
-    destination_dir = sys.argv[3]
+    destination_dir = os.getenv('temp_loc')
 
     outfilename = str(
         destination_dir + reboot_trial + "_" + datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S') + "_" + patch + ".json")

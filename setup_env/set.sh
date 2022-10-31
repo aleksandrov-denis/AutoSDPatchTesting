@@ -3,6 +3,7 @@
 declare -x host=$(grep 'Remote Host:' config.txt | awk '{print $3}')
 declare -x user=$(grep 'Remote User:' config.txt | awk '{print $3}')
 declare -x pswd=$(grep 'Remote Password:' config.txt | awk '{print $3}')
+declare -x index=$(grep 'Remote Backup Kernel Index:' config.txt | awk '{print $5}')
 declare -x kernel=$(grep 'Remote Kernel Path:' config.txt | awk '{print $4}')
 declare -x patches=$(grep 'Remote Path to Patches:' config.txt | awk '{print $5}')
 declare -x patches_txt=$(grep 'Local Path to patches.txt:' config.txt | awk '{print $5}')

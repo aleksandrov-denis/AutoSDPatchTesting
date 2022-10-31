@@ -1,9 +1,10 @@
 Remote Host: 192.168.0.139
 Remote User: guest
 Remote Password: password
+Remote Kernel Backup Index: 0
 Remote Kernel Path: /home/Camera/PatchTesting/kernel-automotive-9
 Remote Path to Patches: /home/Camera/PatchTesting/linux
-Local Path to patches.txt: /home/daleksan/AutoSD/AutoSDPatchTesting/patches.txt
+Local Path to patches.txt: /home/daleksan/AutoSD/AutoSDPatchTesting/trimmed_patches.txt
 Remote Config Path: /boot/config-5.14.0-150.112.el9iv.aarch64
 Local Temp .json Location Path: /home/daleksan/AutoSD/AutoSDPatchTesting/test_temp/
 Local Final .json Location Path: /home/daleksan/AutoSD/AutoSDPatchTesting/test_final/

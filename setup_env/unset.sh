@@ -1,11 +1,11 @@
 #!/bin/bash
 
-
 unset avg_csv
 unset avg_png
 unset config
 unset final_loc
 unset host
+unset index
 unset kernel
 unset patches
 unset patches_txt

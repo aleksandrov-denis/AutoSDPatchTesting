@@ -3,6 +3,7 @@
 export kernel=$1
 export patches=$2
 export config=$3
+export index=$4
 
 if [ ! -e $kernel ]
 then
@@ -17,6 +18,14 @@ fi
 if [ ! -e $config ]
 then
 	exit 3
+fi
+
+cd /boot
+sudo grubby --info=$index
+
+if [ $? -ne 0 ]
+then
+	exit 4
 fi
 
 exit 0

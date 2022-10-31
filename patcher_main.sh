@@ -23,7 +23,7 @@ while [ $trial -le 9 ]
 do
 	# reboot and track kernel boot time (make sure ip is configured properly)
 	# output the files to buffer_dir to then take avg
-	./sut_boottest.py $patch $trial $temp_loc
+	./sut_boottest.py $patch $trial
 
 	if [ $? -ne 0 ]
 	then
@@ -45,7 +45,7 @@ then
 fi
 
 # remove bloat
-sshpass -p $pswd ssh $user@$host "bash -s - $patch $kernel $patches" < patcher_rm_ssh.sh
+sshpass -p $pswd ssh $user@$host "bash -s - $patch $kernel $patches $index" < patcher_rm_ssh.sh
 if [ $? -ne 0 ]
 then
 	echo "Failed cleaning the host, patcher_main exits with code 1"

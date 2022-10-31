@@ -10,6 +10,9 @@ read user_user; export user=$user_user; echo Remote User: $user >> config.txt
 echo "Enter remote host password:"
 read user_password; export pswd=$user_password; echo Remote Password: $pswd >> config.txt
 
+echo "Enter the index of the backup kernel on your remote host (Hint: run 'sudo grubby --info=ALL' in /boot to see available options):"
+read user_index; export index=$user_index; echo Remote Backup Kernel Index: $index >> config.txt
+
 echo "Enter the full path of test kernel source (on your remote system):"
 read user_kernel; export kernel=$user_kernel; echo Remote Kernel Path: $kernel >> config.txt
 

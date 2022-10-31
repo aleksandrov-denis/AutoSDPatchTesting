@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-sshpass -p $pswd ssh $user@$host "bash -s - $kernel $patches $config" < test_ssh.sh
+sshpass -p $pswd ssh $user@$host "bash -s - $kernel $patches $config $index" < test_ssh.sh
 
 export ret=$?
 
@@ -20,6 +20,10 @@ case $ret in
 		;;
 	3)
 		echo "Bad path to .config file in remote host, test exits with code $ret"
+		exit $ret
+		;;
+	4)
+		echo "The backup kernel index: $index is not correct, test exits with code $ret"
 		exit $ret
 		;;
 esac
