@@ -21,6 +21,7 @@ NOTE: This script assumes that when you compile a kernel (on your remote host) t
 - /boot/initramfs*$KERNELVERSION*
 - /boot/System.map*$KERNELVERSION*
 - /lib/modules/*KERNELVERSION*
+
 NOTE: If your remote host (system under test) is running Arch Linux, do not use this script. Arch Linux's .config file is not easily accessible and is not acocuted for in this script.
 
 ## Usage
