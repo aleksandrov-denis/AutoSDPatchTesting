@@ -17,10 +17,10 @@ Each patch is applied on the pi remotely via ssh. The local x86_64 machine, in m
 - main.sh calls run.gnuplot to make two histograms based off of average.csv and variance.csv
 
 NOTE: This script assumes that when you compile a kernel (on your remote host) the folowing entries are created:
-- /boot/vmlinuz*$KERNELVERSION*
-- /boot/initramfs*$KERNELVERSION*
-- /boot/System.map*$KERNELVERSION*
-- /lib/modules/*$KERNELVERSION*
+- /boot/vmlinuz\*$KERNELVERSION\*
+- /boot/initramfs\*$KERNELVERSION\*
+- /boot/System.map\*$KERNELVERSION\*
+- /lib/modules/\*$KERNELVERSION\*
 
 NOTE: If your remote host (system under test) is running Arch Linux, do not use this script. Arch Linux's .config file is not easily accessible and is not acocuted for in this script.
 
