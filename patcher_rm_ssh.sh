@@ -6,7 +6,7 @@ export patches=$3
 export backup_index=$4
 
 cd $kernel
-export KERNELVERSION=$(make kernelversion)$(cat localversion-rt)
+export KERNELRELEASE=$(make kernelrelease))
 
 cd /boot
 
@@ -35,24 +35,24 @@ then
 fi
 
 # remove the last patched kernel, for space management
-if [ -e /boot/vmlinuz*$KERNELVERSION* ]
+if [ -e /boot/vmlinuz*$KERNELRELEASE* ]
 then
-	sudo rm -fr /boot/vmlinuz*$KERNELVERSION*
+	sudo rm -fr /boot/vmlinuz*$KERNELRELEASE*
 fi
 
-if [ -e /boot/initramfs*$KERNELVERSION* ]
+if [ -e /boot/initramfs*$KERNELRELEASE* ]
 then
-	sudo rm -fr /boot/initramfs*$KERNELVERSION*
+	sudo rm -fr /boot/initramfs*$KERNELRELEASE*
 fi
 
-if [ -e /boot/System.map*$KERNELVERSION* ]
+if [ -e /boot/System.map*$KERNELRELEASE* ]
 then
-	sudo rm -fr /boot/System.map*$KERNELVERSION*
+	sudo rm -fr /boot/System.map*$KERNELRELEASE*
 fi
 
-if [ -e /lib/modules/*$KERNELVERSION* ]
+if [ -e /lib/modules/*$KERNELRELEASE* ]
 then
-	sudo rm -fr /lib/modules/*$KERNELVERSION*
+	sudo rm -fr /lib/modules/*$KERNELRELEASE*
 fi
 
 exit 0

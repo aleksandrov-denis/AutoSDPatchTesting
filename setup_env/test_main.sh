@@ -32,7 +32,7 @@ esac
 
 if [ ! -e $patches_txt ]
 then
-	echo "Bad path to text file with patches on local machine, test exits with code $ret"
+	echo "Bad path to text file with patches on local machine, test exits with code 1"
 	exit 1
 fi
 
