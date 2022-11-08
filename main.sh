@@ -41,8 +41,6 @@ done
 
 
 cd ..
-echo stop
-read blam
 
 # expext/autoexpect SOURCE: https://web.archive.org/web/20160404120518/http://www.linuxjournal.com/article/3065?page=0,0
 patch_num=1
