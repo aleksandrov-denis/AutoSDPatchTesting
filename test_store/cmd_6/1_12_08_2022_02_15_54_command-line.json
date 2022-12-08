@@ -1,0 +1,63 @@
+[
+    {
+        "cluster_name": "localhost.localdomain",
+        "date": "2022-12-08T02:15:55.114390Z",
+        "test_type": "boot-time",
+        "sample": 1,
+        "test_config": {
+            "hostname": "localhost.localdomain",
+            "IPaddr": "192.168.0.139",
+            "reboot_timeout": "300",
+            "ssh_timeout": "20",
+            "boot_tgt": "multi-user.target",
+            "blame_cnt": "23"
+        },
+        "test_results": {
+            "reboot": {
+                "reboot_et": 495.57062528503593,
+                "ssh_et": 0.6251156330108643,
+                "sysctl_et": 44.85321116447449,
+                "total_et": 45.47832679748535,
+                "boot_tgt": "graphical.target"
+            },
+            "satime": {
+                "kernel": 1.128,
+                "initrd": 9.979,
+                "userspace": 11.042
+            },
+            "sablame": {
+                "initrd-switch-root.service": 4.546,
+                "NetworkManager-wait-online.service": 4.188,
+                "NetworkManager.service": 1.021,
+                "systemd-logind.service": 0.959,
+                "systemd-tmpfiles-setup.service": 0.789,
+                "auditd.service": 0.773,
+                "initrd-parse-etc.service": 0.726,
+                "chronyd.service": 0.603,
+                "dbus-broker.service": 0.538,
+                "user@999.service": 0.439,
+                "sshd.service": 0.439,
+                "systemd-udev-trigger.service": 0.393,
+                "modprobe@drm.service": 0.349,
+                "systemd-udevd.service": 0.322,
+                "systemd-fsck@dev-disk-by\\x2duuid-156f0420\\x2d627b\\x2d4151\\x2dae6f\\x2dfda…": 0.299,
+                "dracut-cmdline.service": 0.23,
+                "systemd-tmpfiles-setup-dev.service": 0.188,
+                "systemd-modules-load.service": 0.186,
+                "systemd-journald.service": 0.182,
+                "systemd-fsck-root.service": 0.178,
+                "systemd-random-seed.service": 0.153,
+                "initrd-cleanup.service": 0.114,
+                "systemd-sysctl.service": 0.107
+            }
+        },
+        "system_config": {
+            "kernel": "5.14.0-150.112.el9iv.aarch64",
+            "osrelease": "CentOS Stream 9",
+            "architecture": "aarch64",
+            "model": "Cortex-A72",
+            "numcores": "4",
+            "bogomips": "108.00"
+        }
+    }
+]

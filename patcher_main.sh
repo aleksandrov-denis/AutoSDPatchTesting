@@ -16,7 +16,7 @@ then
 	echo "Applying $patch or kernel compilation failed, patcher_main exits with code 1"
 	exit 1
 fi
- 
+
 trial=0
 # get ten trials for kernel boot time per patch
 while [ $trial -le 9 ]

@@ -1,39 +1,47 @@
 #!/bin/bash
 
+cmd=$1
 
-sshpass -p $pswd ssh $user@$host "bash -s - $kernel $patches $config $index" < test_ssh.sh
-
-export ret=$?
-
-case $ret in
-	255)
-		echo "SSH failed, something is wrong with the entered ssh credentials, test exits with code $ret"
-		exit $ret
-		;;
-	1)
-		echo "Bad path to kernel source in remote host, test exits with code $ret"
-		exit $ret
-		;;
-	2)
-		echo "Bad path to patch source in remote host, test exits with code $ret"
-		exit $ret
-		;;
-	3)
-		echo "Bad path to .config file in remote host, test exits with code $ret"
-		exit $ret
-		;;
-	4)
-		echo "The backup kernel index: $index is not correct, test exits with code $ret"
-		exit $ret
-		;;
-esac
-
-
-
-if [ ! -e $patches_txt ]
+if [ $cmd -eq 0 ]
 then
-	echo "Bad path to text file with patches on local machine, test exits with code 1"
-	exit 1
+	sshpass -p $pswd ssh $user@$host "bash -s - $kernel $patches $config $index" < test_ssh.sh
+
+	export ret=$?
+
+	case $ret in
+		255)
+			echo "SSH failed, something is wrong with the entered ssh credentials, test exits with code $ret"
+			exit $ret
+			;;
+		1)
+			echo "Bad path to kernel source in remote host, test exits with code $ret"
+			exit $ret
+			;;
+		2)
+			echo "Bad path to patch source in remote host, test exits with code $ret"
+			exit $ret
+			;;
+		3)
+			echo "Bad path to .config file in remote host, test exits with code $ret"
+			exit $ret
+			;;
+		4)
+			echo "The backup kernel index: $index is not correct, test exits with code $ret"
+			exit $ret
+			;;
+	esac
+
+	if [ ! -e $patches_txt ]
+	then
+		echo "Bad path to text file with patches on local machine, test exits with code 1"
+		exit 1
+	fi
+else
+	if [ ! -e $kclp ]
+	then
+		echo "Bad path to text file with kernel command-line parameters on local machine, test exits with code 1"
+		exit 1
+	fi
 fi
 
 if [ ! -e $temp_loc ]

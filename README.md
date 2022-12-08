@@ -33,7 +33,10 @@ In order to run the script safely, make sure to follow the prerequisite steps.
 3. The local machine needs to have gnuplot installed
 
 ### To Run
-./main.sh
+./main.sh <cmd>i
+cmd == 0 -> run normal patching and kernel compilation process with no special kernel command-line parameters
+cmd == 1 -> run normal patching and kernel compilation process including kernel command-line parameters
+cmd == 2 -> test only kernel command-line parameters
 
 ## Visualization
 Specific data points' averages and variances are converted to csv format and plotted on a histogram.

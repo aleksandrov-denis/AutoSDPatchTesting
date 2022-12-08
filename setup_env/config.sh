@@ -1,14 +1,56 @@
 #!/bin/bash
 
+cmd=$1
+
+if [[ $cmd -lt 0 ]] || [[ $cmd -gt 1 ]] || [[ $# -ne 1 ]]
+then
+	echo "usage: . config.sh <cmd>"
+	echo "cmd == 0 -> configure everything, no kernel command-line parameters"
+	echo "cmd == 1 -> only configure kernel command-line parameters"
+	return
+fi
+
+if [[ $cmd -eq 1 ]]
+then
+	echo "You need to have a .txt file with all of the patches you want by name (on your local system), in the following format... e.g."
+	echo quiet loglevel=0
+	echo rd.systemd.show_status=false
+	echo rd.udev.log_level=1
+	echo "Enter the full path of the .txt file:"
+	read user_kclp; export kclp=$user_kclp; echo Local Path to commands.txt: $kclp > config.txt
+fi
 
 echo "Enter remote host ip:"
-read user_host; export host=$user_host; echo Remote Host: $host > config.txt
+read user_host; export host=$user_host; echo Remote Host: $host >> config.txt
 
 echo "Enter remote user:"
 read user_user; export user=$user_user; echo Remote User: $user >> config.txt
 
 echo "Enter remote host password:"
 read user_password; export pswd=$user_password; echo Remote Password: $pswd >> config.txt
+
+echo "Enter the full path of an empty directory (on your local system terminated by /), this is used for temporary storage in the script:"
+read user_temp_loc; export temp_loc=$user_temp_loc; echo Local Temp .json Location Path: $temp_loc >> config.txt
+
+echo "Enter another full path of an empty directory (on your local system terminated by /), this is where all of the .json files from sut_boottest.sh will be stored:"
+read user_final_loc; export final_loc=$user_final_loc; echo Local Final .json Location Path: $final_loc >> config.txt
+
+echo "Enter the full path of an empty .csv file for the average data (on your local system):"
+read user_avg_csv; export avg_csv=$user_avg_csv; echo Local Average CSV Path: $avg_csv >> config.txt
+
+echo "Enter the full path of an empty .csv file for the variance data (on your local system):"
+read user_var_csv; export var_csv=$user_var_csv; echo Local Variance CSV Path: $var_csv >> config.txt
+
+echo "Enter the full path of an empty .png file for the average graph data (on your local system):"
+read user_avg_png; export avg_png=$user_avg_png; echo Local Average PNG Path: $avg_png >> config.txt
+
+echo "Enter the full path of an empty .png file for the variance graph data (on your local system):"
+read user_var_png; export var_png=$user_var_png; echo Local Variance PNG Path: $var_png >> config.txt
+
+if [ $cmd -eq 1 ]
+then
+	return
+fi
 
 echo "Enter the index of the backup kernel on your remote host (Hint: run 'sudo grubby --info=ALL' in /boot to see available options):"
 read user_index; export index=$user_index; echo Remote Backup Kernel Index: $index >> config.txt
@@ -29,21 +71,3 @@ read user_patches_txt; export patches_txt=$user_patches_txt; echo Local Path to 
 
 echo "Enter the full path of the .config file of the kernel your remote system is currently running:"
 read user_config; export config=$user_config; echo Remote Config Path: $config >> config.txt
-
-echo "Enter the full path of an empty directory (on your local system terminated by /), this is used for temporary storage in the script:"
-read user_temp_loc; export temp_loc=$user_temp_loc; echo Local Temp .json Location Path: $temp_loc >> config.txt
-
-echo "Enter another full path of an empty directory (on your local system terminated by /), this is where all of the .json files from sut_boottest.sh will be stored:"
-read user_final_loc; export final_loc=$user_final_loc; echo Local Final .json Location Path: $final_loc >> config.txt
-
-echo "Enter the full path of an empty .csv file for the average data (on your local system):"
-read user_avg_csv; export avg_csv=$user_avg_csv; echo Local Average CSV Path: $avg_csv >> config.txt
-
-echo "Enter the full path of an empty .csv file for the variance data (on your local system):"
-read user_var_csv; export var_csv=$user_var_csv; echo Local Variance CSV Path: $var_csv >> config.txt
-
-echo "Enter the full path of an empty .png file for the average graph data (on your local system):"
-read user_avg_png; export avg_png=$user_avg_png; echo Local Average PNG Path: $avg_png >> config.txt
-
-echo "Enter the full path of an empty .png file for the variance graph data (on your local system):"
-read user_var_png; export var_png=$user_var_png; echo Local Variance PNG Path: $var_png >> config.txt

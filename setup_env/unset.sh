@@ -1,5 +1,6 @@
 #!/bin/bash
 
+unset kclp
 unset avg_csv
 unset avg_png
 unset config
