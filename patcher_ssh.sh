@@ -32,19 +32,39 @@ sudo patch -p1 < $patches/$patch_file
 if [ $? -ne 0 ]
 then
 	echo "Not able to patch kernel, patcher_ssh.sh exits with code 1"
+	echo "Failed on the following patch:"
+	echo $patch_file
 	exit 1
 fi
 
 # build and install patched kernel
-sudo make -j$(nproc) && sudo make modules_install -j$(nproc) && sudo make install
-
+sudo make -j$(nproc)
 if [ $? -ne 0 ]
 then
 	echo "Something went wrong during the make process, patcher_ssh.sh exits with code 1"
 	exit 1
 fi
 
+sudo make mdules_install -j$(nproc)
+if [ $? -ne 0 ]
+then
+	echo "Something went wrong during the 'make modules_install' process, patcher_ssh.sh exits with code 1"
+	exit 1
+fi
+
+sudo make install
+if [ $? -ne 0 ]
+then
+	echo "Something went wrong during the 'make install' process, patcher_ssh.sh exits with code 1"
+	exit 1
+fi
+
 # set new kernel as default
 sudo grubby --make-default
+if [ $? -ne 0 ]
+then
+	echo "Setting new kernel entry as default failed, patcher_ssh.sh exits with code 1"
+	exit 1
+fi
 
 exit 0

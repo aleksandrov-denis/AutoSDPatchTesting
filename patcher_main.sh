@@ -13,7 +13,6 @@ sshpass -p $pswd ssh $user@$host "bash -s - $patch $kernel $config $patches" < p
 
 if [ $? -ne 0 ]
 then
-	echo "Applying $patch or kernel compilation failed, patcher_main exits with code 1"
 	exit 1
 fi
 
@@ -28,6 +27,9 @@ do
 	if [ $? -ne 0 ]
 	then
 		echo "Failed testing SUT, patcher_main.sh exits with code 1"
+		echo "Failed on patch:"
+		echo $patch
+		echo "Failed on trial: $trial"
 		exit 1
 	fi
 
@@ -41,6 +43,7 @@ done
 if [ $? -ne 0 ]
 then
 	echo "Failed gathering average and variance data, patcher_main.sh exits with code 1"
+	echo "Failed on patch number: $patch_num"
 	exit 1
 fi
 
@@ -48,7 +51,6 @@ fi
 sshpass -p $pswd ssh $user@$host "bash -s - $patch $kernel $patches $index" < patcher_rm_ssh.sh
 if [ $? -ne 0 ]
 then
-	echo "Failed cleaning the host, patcher_main exits with code 1"
 	exit 1
 fi
 

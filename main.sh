@@ -51,25 +51,26 @@ done
 cd ..
 
 # CONTROL
-#i=0
-#while [ $i -lt 10 ]
-#do
-#	./sut_boottest.py "control" $i
-#	if [ $? -ne 0 ]
-#	then
-#		exit 1
-#	fi
-#	i=$(( $i +1 ))
-#done
-#./j2c.o 0
+i=0
+while [ $i -lt 10 ]
+do
+	./sut_boottest.py "control" $i
+	if [ $? -ne 0 ]
+	then
+		echo "sut_boottest.py failed on the control run on trial $i, main.sh exits with code 1"
+		exit 1
+	fi
+	i=$(( $i +1 ))
+done
+./j2c.o 0
+if [ $? -ne 0 ]
+then
+	echo "j2c failed on control run, main.sh exits with code 1"
+	exit 1
+fi
 
-#if [ $? -ne 0 ]
-#then
-#	exit 1
-#fi
-
-#mkdir $final_loc/control
-#mv $temp_loc/* $final_loc/control
+mkdir $final_loc/control
+mv $temp_loc/* $final_loc/control
 
 if [ $cmd -eq 1 ]
 then
@@ -90,6 +91,8 @@ then
 
 			if [ $? -ne 0 ]
 			then
+				echo "sut_boottest.py failed on trial $i, for command:"
+				echo $command
 				exit 1
 			fi
 
@@ -100,6 +103,8 @@ then
 
 		if [ $? -ne 0 ]
 		then
+			echo "j2c failed on command:"
+			echo $command
 			exit 1
 		fi
 
@@ -112,7 +117,20 @@ then
 		fi
 
 		mkdir $final_loc/cmd_$command_num
+		if [ $? -ne 0 ]
+		then
+			echo "Failed to make directory $final_loc/cmd_$command_num, main.sh exits with code 1"
+			echo "Last command was: $command"
+			exit 1
+		fi
 		mv $temp_loc/* $final_loc/cmd_$command_num
+		if [ $? -ne 0 ]
+		then
+			echo "Failed to move contents of $temp_loc to $final_loc/cmd_$command_num"
+			echo "Last command was: $command"
+			echo "main.sh exits with code 1"
+			exit 1
+		fi
 		command_num=$(( $command_num + 1 ))
 
 	done < $kclp
@@ -128,8 +146,6 @@ else
 
 		if [ $? -ne 0 ]
 		then
-			echo "Something went wrong in patcher_main, exit with code 1"
-		
 			cd setup_env/
 			. unset.sh
 			cd ..
@@ -140,7 +156,20 @@ else
 		patch_num=$(( $patch_num + 1 ))
 
 		mkdir $final_loc/$dirname
+		if [ $? -ne 0 ]
+		then
+			echo "Failed to make directory $final_loc/$dirname, main.sh exits with code 1"
+			echo "Last patch was: $patch"
+			exit 1
+		fi
 		mv $temp_loc/* $final_loc/$dirname
+		if [ $? -ne 0 ]
+		then
+			echo "Failed to move contents of $temp_loc to $final_loc/$dirname"
+			echo "Last patch was: $patch"
+			echo "main.sh exits with code 1"
+			exit 1
+		fi
 	done < $patches_txt
 fi
 

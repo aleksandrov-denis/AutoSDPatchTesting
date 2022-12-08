@@ -13,6 +13,8 @@ then
 	if [ $? -ne 0 ]
 	then
 		echo "setting kernel command-line parameters failed, exiting with code 1"
+		echo "parameters that failed to be added are:"
+		echo $params
 		exit 1
 	fi
 else
@@ -21,13 +23,17 @@ else
 	if [ $? -ne 0 ]
 	then
 		echo "removing kernel command-line parameters failed, exiting with code 1"
+		echo "parameters that failed to be removed are:"
+		echo $params
 		exit 1
 	fi
 
 	sudo grubby --update-kernel=/boot/vmlinuz-$(uname -r) --args="$(cat ~/temp)"
 	if [ $? -ne 0 ]
 	then
+		echo "The default kernel arguments are (reset manually):"
 		echo $(cat ~/temp)
+		sudo rm ~/temp
 		echo "not able to reset kernel arguments, exiting with code 1"
 		exit 1
 	fi
