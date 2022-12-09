@@ -15,12 +15,9 @@ The following is how the tool handles function 1 (patch testing) and function 2 
 
 First off, there is a configuration script that is run at the beginning to help users set up their environment for either function 1 or 2.
 
-For function 1 run:
-
-./main 0
-
-For function 2 run:
-
+For function 1 run:\
+./main 0\
+For function 2 run:\
 ./main 1
 
 ### Function 1 (patch testing)
@@ -78,8 +75,8 @@ s.
 6. SUT needs to have SSH working properly.
 
 ## To Run
-./main.sh <cmd>
-cmd == 0 -> test patching and kernel boot process
+./main.sh <cmd>\
+cmd == 0 -> test patching and kernel boot process\
 cmd == 1 -> test only kernel command-line parameters
 
 ## Visualization
