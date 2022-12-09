@@ -23,7 +23,7 @@ For function 2 run:
 The following is a visualization of the call and execution sequence for this function.
 
 ![visualization](images/patchtest_structure.png)
-[laptop](https://www.flaticon.com/free-icon/draw-laptop_81759) [rpi](https://wiki.recalbox.com/en/hardware-compatibility/raspberry-pi)
+[LAPTOP PIC SRC](https://www.flaticon.com/free-icon/draw-laptop_81759) - [RPI PIC SRC](https://wiki.recalbox.com/en/hardware-compatibility/raspberry-pi)
 
 - main.sh does the administritave work, configuration, function management, and graphing.
 - patcher_main.sh manages the calls to the scripts that will run on the SUT.
@@ -53,6 +53,11 @@ NOTE: If your remote host (system under test) is running Arch Linux, do not use 
 
 
 ### Function 2 (kernel command-line parameter testing)
+The following is a visualization of the call and execution sequence for this function.
+
+![visualization](images/commandtest_structure.png)
+[LAPTOP PIC SRC](https://www.flaticon.com/free-icon/draw-laptop_81759) - [RPI PIC SRC](https://wiki.recalbox.com/en/hardware-compatibility/raspberry-pi)
+
 - main.sh does the administritave work, configuration, function management, and graphing.
 - send_cmds.sh sets and unsets the kernel command-line arguments.
 - sut_boottest.py reboots the SUT and reports the boot-time using 'systemd-analyze', all is recorded to .json files in a temporary directory set by the user. This is run ten times.
@@ -66,6 +71,7 @@ s.
 3. The CONTROLLER needs to have SSH working properly.
 4. Make sure that you have grubby installed on your SUT.
 5. SUT needs to have kernel boot entries in /boot
+6. SUT needs to have SSH working properly.
 
 ## To Run
 ./main.sh <cmd>
