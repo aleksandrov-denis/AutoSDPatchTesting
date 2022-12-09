@@ -14,9 +14,13 @@ For function 2, everything is the same besides that the script is testing kernel
 The following is how the tool handles function 1 (patch testing) and function 2 (kernel command-line parameter testing).
 
 First off, there is a configuration script that is run at the beginning to help users set up their environment for either function 1 or 2.
+
 For function 1 run:
+
 ./main 0
+
 For function 2 run:
+
 ./main 1
 
 ### Function 1 (patch testing)
