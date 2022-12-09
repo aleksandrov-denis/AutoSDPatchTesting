@@ -75,7 +75,7 @@ s.
 6. SUT needs to have SSH working properly.
 
 ## To Run
-./main.sh <cmd>\
+./main.sh \<cmd\>\
 cmd == 0 -> test patching and kernel boot process\
 cmd == 1 -> test only kernel command-line parameters
 
